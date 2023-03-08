@@ -17,6 +17,12 @@ declare global {
 			session: Session | null;
 		}
 	}
+	type PromptWithProfile = Database["public"]["Tables"]["prompts"]["Row"] & {
+		profiles: Database["public"]["Tables"]["profiles"]["Row"];
+	};
+	type ProfileWithPrompts = Database["public"]["Tables"]["profiles"]["Row"] & {
+		prompts: Database["public"]["Tables"]["prompts"]["Row"][];
+	};
 }
 
 export {};

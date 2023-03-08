@@ -7,6 +7,7 @@ import {
 import { createSupabaseLoadClient } from "@supabase/auth-helpers-sveltekit";
 import type { LayoutLoad } from "./$types";
 import type { Database } from "$lib/db/types";
+import { error } from "@sveltejs/kit";
 
 export const load: LayoutLoad = async ({ fetch, data, depends }) => {
 	depends("supabase:auth");
@@ -24,6 +25,20 @@ export const load: LayoutLoad = async ({ fetch, data, depends }) => {
 	const {
 		data: { session },
 	} = await db.auth.getSession();
+
+	if (session) {
+		const { data: profile, error: dbError } = await db
+			.from("profiles")
+			.select("username")
+			.eq("id", session?.user.id);
+
+		if (dbError) {
+			throw error(500, dbError.message);
+		}
+		const username = profile[0].username;
+
+		return { db, session, username };
+	}
 
 	return { db, session };
 };

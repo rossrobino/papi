@@ -1,30 +1,26 @@
-<script lang="ts">
-	import { enhance, type SubmitFunction } from "$app/forms";
-	import type { ActionData } from "./$types";
+<h1 class="mb-8">A prompt manager and API</h1>
 
-	export let form: ActionData;
+<div class="flex flex-col gap-8">
+	<section class="flex flex-col gap-4">
+		<h2>Library</h2>
+		<p>Create prompts for AI models like ChatGPT and share them with others.</p>
+	</section>
 
-	let loading = false;
+	<section class="flex flex-col gap-4">
+		<h2>Functions</h2>
+		<p>
+			Run your prompts like functions by using the <code>$$data$$</code>
+			syntax directly in your prompt.
+		</p>
+	</section>
 
-	const submit: SubmitFunction = () => {
-		// before response
-		loading = true;
-		// after response
-		return async ({ update }) => {
-			loading = false;
-			// run default update
-			update();
-		};
-	};
-</script>
-
-<form action="?/chat" method="POST" use:enhance={submit}>
-	<label>
-		prompt:
-		<input type="text" name="prompt" class="bg-blue-50" />
-	</label>
-</form>
-
-{#if form?.message}
-	{JSON.stringify(form.message)}
-{/if}
+	<section class="flex flex-col gap-4">
+		<h2>API</h2>
+		<p>
+			<code>https://papi.robino.dev/api/your-prompt-name</code>
+		</p>
+	</section>
+	<div class="flex justify-center">
+		<a class="btn px-8 py-4 text-xl" href="/app">Get Started</a>
+	</div>
+</div>

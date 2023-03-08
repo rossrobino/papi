@@ -1,3 +1,63 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+	body {
+		@apply bg-stone-50 text-stone-900 selection:bg-stone-900 selection:text-stone-100;
+	}
+	input,
+	textarea {
+		@apply rounded-3xl px-3 py-2 border border-stone-500 min-h-[44px];
+	}
+	button,
+	.btn {
+		@apply block rounded-full bg-stone-700 px-3 py-2 text-center font-semibold text-stone-100 no-underline shadow hover:bg-stone-800 active:bg-stone-900;
+	}
+	a {
+		@apply font-semibold underline decoration-stone-500 hover:decoration-dotted;
+	}
+	h1 {
+		@apply text-5xl font-bold;
+	}
+	h2 {
+		@apply text-4xl font-bold;
+	}
+	h3 {
+		@apply text-3xl font-bold;
+	}
+	h4 {
+		@apply text-2xl font-bold;
+	}
+	section {
+		@apply rounded-3xl bg-stone-100 p-6;
+	}
+	form {
+		@apply flex flex-col gap-4;
+	}
+	form label {
+		@apply flex flex-col gap-1;
+	}
+	blockquote {
+		@apply whitespace-pre-wrap italic;
+	}
+	code {
+		@apply rounded-lg bg-stone-900 px-2 py-1 text-stone-100;
+	}
+	table {
+		@apply w-full;
+	}
+	tr {
+		@apply border-b border-dashed border-stone-300;
+	}
+	th,
+	td {
+		@apply p-2 text-left;
+	}
+}
+
+@layer components {
+	.card {
+		@apply rounded-3xl bg-stone-200 p-4 shadow;
+	}
+}
