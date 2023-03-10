@@ -1,5 +1,6 @@
 import { error, redirect } from "@sveltejs/kit";
 import type { Actions, PageServerLoad } from "./$types";
+import { UserSchema } from "$lib/zodSchemas";
 
 export const actions: Actions = {
 	default: async ({ request, locals: { db, getSession } }) => {
@@ -11,8 +12,17 @@ export const actions: Actions = {
 
 		const data = await request.formData();
 
-		const username = String(data.get("username"));
-		const github = String(data.get("github"));
+		const username = String(data.get("username")).trim().toLowerCase();
+		const github = String(data.get("github")).trim().toLowerCase();
+
+		const safeParse = UserSchema.pick({
+			username: true,
+			github: true,
+		}).safeParse({ username, github });
+
+		if (!safeParse.success) {
+			return { error: JSON.stringify(safeParse.error.issues) };
+		}
 
 		const { error: dbError } = await db
 			.from("profiles")
@@ -20,7 +30,7 @@ export const actions: Actions = {
 			.eq("id", session.user.id);
 
 		if (dbError) {
-			throw error(500, dbError.message);
+			return { error: dbError.message };
 		}
 
 		throw redirect(303, `/app/profile/${username}`);

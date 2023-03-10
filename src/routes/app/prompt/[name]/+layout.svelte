@@ -1,9 +1,10 @@
 <script lang="ts">
+	import Head from "$lib/components/Head.svelte";
 	import type { LayoutData } from "./$types";
 
 	export let data: LayoutData;
 </script>
 
-<h1 class="mb-6">{data.prompt.name}</h1>
+<Head title={data.prompt.name} description={data.prompt.description} />
 
 <slot />

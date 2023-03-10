@@ -1,25 +1,39 @@
-<script>
+<script lang="ts">
 	import { enhance } from "$app/forms";
+	import type { ActionData } from "./$types";
+	import Head from "$lib/components/Head.svelte";
+	import ErrorMessage from "$lib/components/ErrorMessage.svelte";
+
+	export let form: ActionData;
 </script>
 
-<h1 class="mb-6">Sign In</h1>
+<Head title="Sign In" description="Sign into papi." />
 
-<section class="mb-4">
+<section class="flex flex-col gap-4">
 	<form method="POST" use:enhance>
 		<div>
 			<label>
-				email
-				<input type="email" name="email" />
+				Email
+				<input type="email" name="email" required />
 			</label>
 		</div>
 
 		<div>
 			<label>
-				password
-				<input type="password" name="password" />
+				Password
+				<input type="password" name="password" required />
 			</label>
 		</div>
-		<a href="/signup">Create new account</a>
+		<div class="flex justify-between">
+			<a href="/signup">Create new account</a>
+			<a href="/resetPassword">Forgot password</a>
+		</div>
+
 		<button>Sign In</button>
 	</form>
+	{#if form?.error}
+		<div class="flex">
+			<ErrorMessage error={form.error} />
+		</div>
+	{/if}
 </section>

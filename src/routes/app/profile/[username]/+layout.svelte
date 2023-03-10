@@ -1,20 +1,22 @@
 <script lang="ts">
+	import Head from "$lib/components/Head.svelte";
 	import type { LayoutData } from "./$types";
+	import GitHubImage from "$lib/components/GitHubImage.svelte";
 
 	export let data: LayoutData;
 </script>
 
-<div class="flex items-center gap-6 mb-6">
+<div class="mb-6 flex items-center gap-6">
 	{#if data.profile.github}
 		<a href="https://github.com/{data.profile.github}">
-			<img
-				src="https://github.com/{data.profile.github}.png"
-				class="h-24 rounded-full"
-				alt={data.profile.github}
-			/>
+			<GitHubImage github={data.profile.github} />
 		</a>
 	{/if}
-	<h1>@{data.profile.username}</h1>
+	<Head
+		title="@{data.profile.username}"
+		description="View {data.profile.username}'s account."
+		class="!mb-0"
+	/>
 </div>
 
 <slot />

@@ -1,18 +1,19 @@
 <script lang="ts">
 	import ButtonCreatePrompt from "$lib/components/ButtonCreatePrompt.svelte";
+	import Head from "$lib/components/Head.svelte";
 	import type { PageData } from "./$types";
 
 	export let data: PageData;
 </script>
 
-<h1 class="mb-6">Dashboard</h1>
+<Head title="Dashboard" description="Browse popular prompts. " />
 
 <section>
-	<div class="flex justify-between items-center mb-8">
+	<div class="mb-8 flex items-center justify-between gap-4">
 		<h2>New</h2>
 		<ButtonCreatePrompt />
 	</div>
-	<div class="flex flex-col gap-4">
+	<div class="overflow-x-auto">
 		{#if data.prompts}
 			<table>
 				<thead>

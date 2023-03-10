@@ -25,7 +25,7 @@ export const load: LayoutLoad = async ({ parent, params }) => {
 	const profile = tableData[0] as ProfileWithPrompts;
 
 	if (!profile) {
-		throw error(404, "User not found.")
+		throw error(404, "User not found.");
 	}
 
 	return {

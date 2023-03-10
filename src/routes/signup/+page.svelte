@@ -1,35 +1,37 @@
 <script lang="ts">
 	import { enhance } from "$app/forms";
+	import ErrorMessage from "$lib/components/ErrorMessage.svelte";
+	import Head from "$lib/components/Head.svelte";
 	import type { ActionData } from "./$types";
 
 	export let form: ActionData;
 </script>
 
-<h1 class="mb-6">Sign Up</h1>
+<Head title="Sign Up" description="Create a papi account." />
 
-<section>
+<section class="flex flex-col gap-4">
 	{#if form?.success}
 		Check your email to complete verification. <a href="/signin">Sign In</a>
 	{:else}
 		<form method="POST" use:enhance class="flex flex-col gap-4">
 			<div>
 				<label>
-					username
-					<input type="text" name="username" />
+					Username
+					<input type="text" min="2" max="30" name="username" required />
 				</label>
 			</div>
 
 			<div>
 				<label>
-					email
-					<input type="email" name="email" />
+					Email
+					<input type="email" name="email" required />
 				</label>
 			</div>
 
 			<div>
 				<label>
-					password
-					<input type="password" name="password" />
+					Password
+					<input type="password" name="password" required />
 				</label>
 			</div>
 
@@ -37,11 +39,13 @@
 		</form>
 	{/if}
 
-	{#if form?.errorMessage}
-		{#if form.errorMessage === 'duplicate key value violates unique constraint "profiles_username_key"'}
-			Username already taken, please try again.
-		{:else}
-			{form.errorMessage}
-		{/if}
+	{#if form?.error}
+		<div class="flex">
+			{#if form.error === 'duplicate key value violates unique constraint "profiles_username_key"'}
+				<ErrorMessage error="Username already taken, please try again." />
+			{:else}
+				<ErrorMessage error={form.error} />
+			{/if}
+		</div>
 	{/if}
 </section>

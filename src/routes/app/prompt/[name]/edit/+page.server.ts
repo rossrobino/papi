@@ -1,5 +1,6 @@
 import { error, redirect } from "@sveltejs/kit";
 import type { Actions, PageServerLoad } from "./$types";
+import { PromptSchema } from "$lib/zodSchemas";
 
 export const actions: Actions = {
 	edit: async ({ request, locals: { db, getSession } }) => {
@@ -16,13 +17,18 @@ export const actions: Actions = {
 		const prompt = String(data.get("prompt"));
 		const description = String(data.get("description"));
 
+		const safeParse = PromptSchema.safeParse({ name, description, prompt });
+		if (!safeParse.success) {
+			return { error: JSON.stringify(safeParse.error.issues) };
+		}
+
 		const { error: dbError } = await db
 			.from("prompts")
 			.update({ description, prompt, name })
 			.eq("id", id);
 
 		if (dbError) {
-			throw error(500, dbError.message);
+			return { error: dbError.message };
 		}
 
 		throw redirect(303, `/app/prompt/${name}`);

@@ -5,15 +5,18 @@ export const load: PageLoad = async ({ parent }) => {
 
 	const { data: tableData } = await db
 		.from("prompts")
-		.select(`
+		.select(
+			`
 			*,
 			profiles (
 				id,
 				username
 			)
-		`)
-		.order("created_at", { ascending: false });
-	
+		`,
+		)
+		.order("created_at", { ascending: false })
+		.limit(10);
+
 	const prompts = tableData as PromptWithProfile[];
 
 	return {
