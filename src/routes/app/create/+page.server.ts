@@ -9,27 +9,33 @@ export const actions: Actions = {
 			throw error(401, "Unauthorized");
 		}
 
-		const user = session?.user.id;
-
 		const data = await request.formData();
-		const name = String(data.get("name")).trim().toLowerCase();
-		const description = String(data.get("description")).trim();
-		const prompt = String(data.get("prompt")).trim();
 
-		const safeParse = PromptSchema.safeParse({ name, description, prompt });
+		const prompt = {
+			user: session?.user.id,
+			name: String(data.get("name")).trim().toLowerCase(),
+			description: String(data.get("description")).trim(),
+			source: String(data.get("source")).trim(),
+			prompt: String(data.get("prompt") ?? "").trim(),
+			repository: String(data.get("repository") ?? "").trim(),
+			path: String(data.get("path") ?? "").trim(),
+		};
+
+		const safeParse = PromptSchema.safeParse(prompt);
+
 		if (!safeParse.success) {
 			return { error: JSON.stringify(safeParse.error.issues) };
 		}
 
 		const { error: dbError } = await db
 			.from("prompts")
-			.insert({ name, description, prompt, user });
+			.insert(prompt);
 
 		if (dbError) {
 			return { error: dbError.message };
 		}
 
-		throw redirect(303, "/app/prompt/" + name);
+		throw redirect(303, "/app/prompt/" + prompt.name);
 	},
 };
 

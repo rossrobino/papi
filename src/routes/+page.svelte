@@ -24,8 +24,8 @@
 	<section class="flex flex-col gap-4">
 		<h2>Functions</h2>
 		<p>
-			Run a prompt like a function. Use the <DataText value="data" />
-			syntax to insert data as variables directly into a prompt.
+			Run a prompt like a function. Use the<DataText value="data" />syntax to
+			insert data as variables directly into a prompt.
 		</p>
 	</section>
 

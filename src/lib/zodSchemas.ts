@@ -23,5 +23,8 @@ export const PromptSchema = z.object({
 		message: "Name must be letters, numbers, and dashes only",
 	}),
 	description: z.string(),
-	prompt: z.string(),
+	source: z.enum(["papi", "github"]),
+	prompt: z.string().optional(),
+	repository: z.string().optional(),
+	path: z.string().optional(),
 });

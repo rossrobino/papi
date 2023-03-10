@@ -2,6 +2,7 @@
 	import { enhance } from "$app/forms";
 	import DataText from "$lib/components/DataText.svelte";
 	import type { Database } from "$lib/db/types";
+	import GitHub from "$lib/svg/GitHub.svelte";
 
 	type PromptWithProfile = Database["public"]["Tables"]["prompts"]["Row"] & {
 		profiles: Database["public"]["Tables"]["profiles"]["Row"];
@@ -12,6 +13,7 @@
 	let splitPrompt = prompt.prompt?.split("$$");
 
 	export let editing = false;
+	let source = prompt.source;
 </script>
 
 <form method="POST" action="?/edit" use:enhance>
@@ -19,7 +21,7 @@
 	{#if editing}
 		<section class="flex flex-col gap-4">
 			<h2>Name</h2>
-			<input type="text" name="name" value={prompt.name} />
+			<input type="text" name="name" bind:value={prompt.name} />
 		</section>
 	{/if}
 	<div class="grid gap-4 md:grid-cols-3">
@@ -44,19 +46,68 @@
 		<section class="flex flex-col gap-4 md:col-span-2">
 			<h2>Prompt</h2>
 			{#if editing}
+				<div>
+					<label>
+						Source
+						<select name="source" bind:value={source} required>
+							<option value="papi">papi</option>
+							<option value="github">GitHub</option>
+						</select>
+					</label>
+				</div>
+			{/if}
+			{#if editing && source === "papi"}
 				<textarea class="h-96" name="prompt" value={prompt.prompt} />
+			{:else if !editing}
+				<div class="h-full">
+					<p class="whitespace-pre-wrap">
+						{#if splitPrompt}
+							{#each splitPrompt as partial, i}
+								{#if Math.abs(i % 2) == 1}
+									<DataText value={partial} />
+								{:else}
+									<span>{partial.trim()}</span>
+								{/if}
+							{/each}
+						{/if}
+					</p>
+				</div>
 			{:else}
-				<p class="whitespace-pre-wrap">
-					{#if splitPrompt}
-						{#each splitPrompt as partial, i}
-							{#if Math.abs(i % 2) == 1}
-								<DataText value={partial} />
-							{:else}
-								<span>{partial.trim()}</span>
-							{/if}
-						{/each}
-					{/if}
-				</p>
+				<div>
+					<label>
+						Repository
+						<input
+							type="text"
+							name="repository"
+							placeholder="username/repository"
+							bind:value={prompt.repository}
+							required
+						/>
+					</label>
+				</div>
+				<div>
+					<label>
+						Path
+						<input
+							type="text"
+							name="path"
+							placeholder="prompts/{prompt.name ? prompt.name : 'name'}.md"
+							bind:value={prompt.path}
+							required
+						/>
+					</label>
+				</div>
+			{/if}
+			{#if source === "github" && prompt.repository && prompt.path}
+				<div class="flex">
+					<a
+						class="flex items-center gap-2"
+						href="https://github.com/{prompt.repository}/blob/main/{prompt.path}"
+					>
+						<GitHub />
+						{prompt.repository}
+					</a>
+				</div>
 			{/if}
 		</section>
 	</div>

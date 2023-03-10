@@ -3,22 +3,34 @@ import type { RequestHandler } from "./$types";
 import { Configuration, OpenAIApi } from "openai";
 import { OPENAI_API_KEY } from "$env/static/private";
 import { insertDataIntoPrompt } from "$lib/util/insertDataIntoPrompt";
+import { githubContents } from "$lib/util/githubContents";
 
-export const GET = (async ({ url, params, locals: { db } }) => {
+export const GET = (async ({ url, params, locals: { db }, fetch }) => {
 	const data = String(url.searchParams.get("data") ?? "{}");
 
 	const name = params.promptName;
 
 	const { data: dbData, error: dbError } = await db
 		.from("prompts")
-		.select("prompt")
+		.select("prompt, source, repository, path")
 		.eq("name", name);
 
 	if (dbError) throw error(404, dbError.message);
 
-	const prompt = String(dbData[0].prompt);
+	let prompt = String(dbData[0].prompt);
+	console.log(prompt);
+
+	if (dbData[0].source === "github") {
+		prompt = await githubContents(
+			String(dbData[0].repository),
+			String(dbData[0].path),
+			fetch,
+		);
+	}
 
 	const promptWithData = insertDataIntoPrompt(data, prompt);
+
+	console.log(promptWithData);
 
 	const configuration = new Configuration({
 		apiKey: OPENAI_API_KEY,

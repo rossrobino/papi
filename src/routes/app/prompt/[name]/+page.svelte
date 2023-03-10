@@ -59,9 +59,9 @@
 {#if data.prompt}
 	<div class="flex flex-col gap-4">
 		<Prompt editing={false} prompt={data.prompt} />
-		<section class="flex flex-col gap-4">
-			<h2>Data</h2>
-			{#if dataParams.length}
+		{#if dataParams.length}
+			<section class="flex flex-col gap-4">
+				<h2>Data</h2>
 				<table class="table-fixed">
 					<thead>
 						<tr>
@@ -78,8 +78,8 @@
 						{/each}
 					</tbody>
 				</table>
-			{/if}
-		</section>
+			</section>
+		{/if}
 		<section class="flex flex-col gap-4">
 			<h2>Run</h2>
 			<div class="flex flex-col gap-4 rounded-3xl bg-stone-50 p-4 shadow">

@@ -13,25 +13,31 @@ export const actions: Actions = {
 		const data = await request.formData();
 
 		const id = String(data.get("id"));
-		const name = String(data.get("name"));
-		const prompt = String(data.get("prompt"));
-		const description = String(data.get("description"));
 
-		const safeParse = PromptSchema.safeParse({ name, description, prompt });
+		const prompt = {
+			name: String(data.get("name")).trim().toLowerCase(),
+			description: String(data.get("description")).trim(),
+			source: String(data.get("source")).trim(),
+			prompt: String(data.get("prompt") ?? "").trim(),
+			repository: String(data.get("repository") ?? "").trim(),
+			path: String(data.get("path") ?? "").trim(),
+		};
+
+		const safeParse = PromptSchema.safeParse(prompt);
 		if (!safeParse.success) {
 			return { error: JSON.stringify(safeParse.error.issues) };
 		}
 
 		const { error: dbError } = await db
 			.from("prompts")
-			.update({ description, prompt, name })
+			.update(prompt)
 			.eq("id", id);
 
 		if (dbError) {
 			return { error: dbError.message };
 		}
 
-		throw redirect(303, `/app/prompt/${name}`);
+		throw redirect(303, `/app/prompt/${prompt.name}`);
 	},
 	delete: async ({ params, locals: { db, getSession } }) => {
 		const session = await getSession();

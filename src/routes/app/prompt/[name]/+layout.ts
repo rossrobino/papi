@@ -1,7 +1,8 @@
+import { githubContents } from "$lib/util/githubContents";
 import type { LayoutLoad } from "./$types";
 import { error } from "@sveltejs/kit";
 
-export const load: LayoutLoad = async ({ parent, params }) => {
+export const load: LayoutLoad = async ({ parent, params, fetch }) => {
 	const { db, session } = await parent();
 
 	const name = params.name;
@@ -25,8 +26,16 @@ export const load: LayoutLoad = async ({ parent, params }) => {
 
 	const prompt = tableData[0] as PromptWithProfile;
 
+	if (prompt.source === "github") {
+		prompt.prompt = await githubContents(
+			String(prompt.repository),
+			String(prompt.path),
+			fetch
+		);
+	}
+
 	if (!prompt) {
-		throw error(404, "Prompt not found.");
+		throw error(404, "Prompt not found");
 	}
 
 	return {

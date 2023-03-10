@@ -10,3 +10,15 @@
 - [openai](https://github.com/openai)
 - [colinhacks/zod](https://github.com/colinhacks/zod)
 - [calcom/font](https://github.com/calcom/font)
+
+
+## GitHub Repo Contents
+
+https://api.github.com/repos/rossrobino/plought/contents/README.md?ref=main
+https://api.github.com/repos/rossrobino/robino/contents/src?ref=main
+https://api.github.com/repos/rossrobino/robino/contents/src/app.html?ref=main
+
+returns { content }
+
+use atob(content) to decode client side
+console.log(Buffer.from(b64Encoded, 'base64').toString()); node
