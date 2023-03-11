@@ -1,4 +1,4 @@
-# papi
+# papi.run
 
 ## A Prompt Manager and API
 
