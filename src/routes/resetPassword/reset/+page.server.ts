@@ -1,8 +1,6 @@
 import { UserSchema } from "$lib/zodSchemas";
-import { redirect } from "@sveltejs/kit";
-import type { Actions, PageServerLoad } from "./$types";
 
-export const actions: Actions = {
+export const actions = {
 	default: async ({ request, locals: { db } }) => {
 		const data = await request.formData();
 

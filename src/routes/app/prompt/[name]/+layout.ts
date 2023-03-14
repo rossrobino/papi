@@ -1,8 +1,7 @@
 import { githubContents } from "$lib/util/githubContents";
-import type { LayoutLoad } from "./$types";
 import { error } from "@sveltejs/kit";
 
-export const load: LayoutLoad = async ({ parent, params, fetch }) => {
+export const load = async ({ parent, params, fetch }) => {
 	const { db, session } = await parent();
 
 	const name = params.name;
@@ -30,7 +29,7 @@ export const load: LayoutLoad = async ({ parent, params, fetch }) => {
 		prompt.prompt = await githubContents(
 			String(prompt.repository),
 			String(prompt.path),
-			fetch
+			fetch,
 		);
 	}
 

@@ -1,8 +1,7 @@
 import { info } from "$lib/info";
 import { UserSchema } from "$lib/zodSchemas";
-import type { Actions } from "./$types";
 
-export const actions: Actions = {
+export const actions = {
 	default: async ({ request, locals: { db } }) => {
 		const data = await request.formData();
 

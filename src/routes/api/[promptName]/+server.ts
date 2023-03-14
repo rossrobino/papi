@@ -1,11 +1,10 @@
 import { error, json } from "@sveltejs/kit";
-import type { RequestHandler } from "./$types";
 import { Configuration, OpenAIApi } from "openai";
 import { OPENAI_API_KEY } from "$env/static/private";
 import { insertDataIntoPrompt } from "$lib/util/insertDataIntoPrompt";
 import { githubContents } from "$lib/util/githubContents";
 
-export const GET = (async ({ url, params, locals: { db }, fetch }) => {
+export const GET = async ({ url, params, locals: { db }, fetch }) => {
 	const data = String(url.searchParams.get("data") ?? "{}");
 
 	const name = params.promptName;
@@ -18,7 +17,6 @@ export const GET = (async ({ url, params, locals: { db }, fetch }) => {
 	if (dbError) throw error(404, dbError.message);
 
 	let prompt = String(dbData[0].prompt);
-	console.log(prompt);
 
 	if (dbData[0].source === "github") {
 		prompt = await githubContents(
@@ -46,4 +44,4 @@ export const GET = (async ({ url, params, locals: { db }, fetch }) => {
 	const message = String(response.data.choices[0].message?.content).trim();
 
 	return json(message);
-}) satisfies RequestHandler;
+};

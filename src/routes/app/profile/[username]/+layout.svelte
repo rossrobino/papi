@@ -1,9 +1,8 @@
 <script lang="ts">
 	import Head from "$lib/components/Head.svelte";
-	import type { LayoutData } from "./$types";
 	import GitHubImage from "$lib/components/GitHubImage.svelte";
 
-	export let data: LayoutData;
+	export let data;
 </script>
 
 <div class="mb-6 flex items-center gap-6">

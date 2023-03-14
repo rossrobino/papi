@@ -1,7 +1,6 @@
-import type { LayoutLoad } from "./$types";
 import { error } from "@sveltejs/kit";
 
-export const load: LayoutLoad = async ({ parent, params }) => {
+export const load = async ({ parent, params }) => {
 	const { db, session } = await parent();
 
 	const username = params.username;

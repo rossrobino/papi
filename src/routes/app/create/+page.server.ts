@@ -1,8 +1,7 @@
 import { error, redirect } from "@sveltejs/kit";
-import type { Actions, PageServerLoad } from "./$types";
 import { PromptSchema } from "$lib/zodSchemas";
 
-export const actions: Actions = {
+export const actions = {
 	default: async ({ request, locals: { db, getSession } }) => {
 		const session = await getSession();
 		if (!session) {
@@ -27,9 +26,7 @@ export const actions: Actions = {
 			return { error: JSON.stringify(safeParse.error.issues) };
 		}
 
-		const { error: dbError } = await db
-			.from("prompts")
-			.insert(prompt);
+		const { error: dbError } = await db.from("prompts").insert(prompt);
 
 		if (dbError) {
 			return { error: dbError.message };
@@ -39,7 +36,7 @@ export const actions: Actions = {
 	},
 };
 
-export const load: PageServerLoad = async ({ locals: { getSession } }) => {
+export const load = async ({ locals: { getSession } }) => {
 	const session = await getSession();
 	if (!session) {
 		throw redirect(303, "/signin");

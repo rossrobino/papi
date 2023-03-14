@@ -1,8 +1,7 @@
 <script lang="ts">
 	import ButtonCreatePrompt from "$lib/components/ButtonCreatePrompt.svelte";
-	import type { PageData } from "./$types";
 
-	export let data: PageData;
+	export let data;
 </script>
 
 {#if data.profile}

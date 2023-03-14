@@ -1,10 +1,9 @@
 <script lang="ts">
 	import { enhance } from "$app/forms";
 	import ErrorMessage from "$lib/components/ErrorMessage.svelte";
-	import type { ActionData, PageData } from "./$types";
 
-	export let data: PageData;
-	export let form: ActionData;
+	export let data;
+	export let form;
 </script>
 
 {#if data.profile}
@@ -35,7 +34,11 @@
 				</div>
 			</label>
 			<button>Submit</button>
-			<a href="/resetPassword/reset">Reset password</a>
+			<div class="flex justify-between gap-4">
+				<a href="/resetPassword/reset">Reset password</a>
+				<a href="/app/profile/{data.profile.username}/delete">Delete Account</a>
+
+			</div>
 		</form>
 		{#if form?.error}
 			<div class="flex">

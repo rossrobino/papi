@@ -1,9 +1,8 @@
 <script lang="ts">
 	import ButtonCreatePrompt from "$lib/components/ButtonCreatePrompt.svelte";
 	import Head from "$lib/components/Head.svelte";
-	import type { PageData } from "./$types";
 
-	export let data: PageData;
+	export let data;
 </script>
 
 <Head title="Dashboard" description="Browse popular prompts. " />

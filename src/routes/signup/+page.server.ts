@@ -1,35 +1,33 @@
 import { redirect } from "@sveltejs/kit";
-import type { Actions, PageServerLoad } from "./$types";
 import { UserSchema } from "$lib/zodSchemas";
 
-export const actions: Actions = {
+export const actions = {
 	default: async ({ request, locals: { db } }) => {
 		let success = false;
 		const formData = await request.formData();
 
-		const username = String(formData.get("username")).trim().toLowerCase();
-		const email = String(formData.get("email")).trim().toLowerCase();
-		const password = String(formData.get("password"));
+		const user = {
+			username: String(formData.get("username")).trim().toLowerCase(),
+			email: String(formData.get("email")).trim().toLowerCase(),
+			password: String(formData.get("password")),
+		};
 
 		// zod validation
 		const safeParse = UserSchema.pick({
 			username: true,
 			email: true,
 			password: true,
-		}).safeParse({
-			username,
-			email,
-			password,
-		});
+		}).safeParse(user);
+
 		if (!safeParse.success) {
 			return { error: JSON.stringify(safeParse.error.issues) };
 		}
 
 		const { error: dbError } = await db.auth.signUp({
-			email,
-			password,
+			email: user.email,
+			password: user.password,
 			options: {
-				data: { username },
+				data: { username: user.username },
 			},
 		});
 
@@ -44,7 +42,7 @@ export const actions: Actions = {
 	},
 };
 
-export const load: PageServerLoad = async ({ locals: { getSession } }) => {
+export const load = async ({ locals: { getSession } }) => {
 	const session = await getSession();
 	if (session) {
 		throw redirect(303, "/app");

@@ -1,6 +1,4 @@
-import type { Actions } from "@sveltejs/kit";
-
-export const actions: Actions = {
+export const actions = {
 	run: async ({ fetch, params, request }) => {
 		const name = params.name;
 

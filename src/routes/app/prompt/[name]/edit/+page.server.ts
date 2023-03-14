@@ -1,8 +1,7 @@
 import { error, redirect } from "@sveltejs/kit";
-import type { Actions, PageServerLoad } from "./$types";
 import { PromptSchema } from "$lib/zodSchemas";
 
-export const actions: Actions = {
+export const actions = {
 	edit: async ({ request, locals: { db, getSession } }) => {
 		const session = await getSession();
 
@@ -60,10 +59,7 @@ export const actions: Actions = {
 	},
 };
 
-export const load: PageServerLoad = async ({
-	params,
-	locals: { db, getSession },
-}) => {
+export const load = async ({ params, locals: { db, getSession } }) => {
 	const session = await getSession();
 
 	const name = params.name;

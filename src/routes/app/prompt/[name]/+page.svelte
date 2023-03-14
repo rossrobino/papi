@@ -1,13 +1,12 @@
 <script lang="ts">
 	import { enhance, type SubmitFunction } from "$app/forms";
 	import { insertDataIntoPrompt } from "$lib/util/insertDataIntoPrompt";
-	import type { ActionData, PageData } from "./$types";
 	import { loading } from "$lib/stores";
 	import Prompt from "./Prompt.svelte";
 	import { info } from "$lib/info";
 
-	export let data: PageData;
-	export let form: ActionData;
+	export let data;
+	export let form;
 
 	const prompt = data.prompt.prompt;
 
@@ -21,9 +20,18 @@
 	const splitPrompt = prompt?.split("$$");
 
 	splitPrompt?.forEach((s, i) => {
-		// odd
+		// if odd
 		if (Math.abs(i % 2) == 1) {
-			dataParams.push({ key: s, value: "value" });
+			if (dataParams.length) {
+				// remove duplicate keys
+				dataParams.forEach((obj) => {
+					if (obj.key !== s) {
+						dataParams.push({ key: s, value: "value" });
+					}
+				});
+			} else {
+				dataParams.push({ key: s, value: "value" });
+			}
 		}
 	});
 
@@ -50,6 +58,7 @@
 	};
 </script>
 
+<!-- only show edit button if user id matches the prompt's user -->
 {#if data.user?.id === data.prompt.profiles.id}
 	<div class="mb-8 flex justify-end md:-mt-[4.5rem]">
 		<a class="btn" href="/app/prompt/{data.prompt.name}/edit">Edit prompt</a>

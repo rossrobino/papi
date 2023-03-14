@@ -1,6 +1,4 @@
-import type { PageLoad } from "./$types";
-
-export const load: PageLoad = async ({ parent }) => {
+export const load = async ({ parent }) => {
 	const { db, session } = await parent();
 
 	const { data: tableData } = await db

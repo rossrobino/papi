@@ -1,11 +1,10 @@
 <script lang="ts">
-	import type { ActionData, PageData } from "./$types";
 	import Prompt from "../Prompt.svelte";
 	import { enhance } from "$app/forms";
 	import ErrorMessage from "$lib/components/ErrorMessage.svelte";
 
-	export let data: PageData;
-	export let form: ActionData;
+	export let data;
+	export let form;
 </script>
 
 {#if data.prompt}

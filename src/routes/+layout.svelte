@@ -2,10 +2,9 @@
 	import NavLinks from "$lib/components/NavLinks.svelte";
 	import "../app.css";
 	import "cal-sans";
-	import type { LayoutData } from "./$types";
 	import Papi from "$lib/components/Papi.svelte";
 
-	export let data: LayoutData;
+	export let data;
 </script>
 
 <div class="flex h-[100dvh] flex-col justify-between">

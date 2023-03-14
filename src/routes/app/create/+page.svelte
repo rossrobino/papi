@@ -2,9 +2,8 @@
 	import { enhance } from "$app/forms";
 	import ErrorMessage from "$lib/components/ErrorMessage.svelte";
 	import Head from "$lib/components/Head.svelte";
-	import type { ActionData } from "./$types";
 
-	export let form: ActionData;
+	export let form;
 
 	let name: string;
 	let source = "papi";

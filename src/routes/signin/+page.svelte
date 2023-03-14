@@ -1,10 +1,9 @@
 <script lang="ts">
 	import { enhance } from "$app/forms";
-	import type { ActionData } from "./$types";
 	import Head from "$lib/components/Head.svelte";
 	import ErrorMessage from "$lib/components/ErrorMessage.svelte";
 
-	export let form: ActionData;
+	export let form;
 </script>
 
 <Head title="Sign In" description="Sign into papi." />
