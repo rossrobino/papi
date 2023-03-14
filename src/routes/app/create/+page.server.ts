@@ -1,5 +1,6 @@
 import { error, redirect } from "@sveltejs/kit";
 import { PromptSchema } from "$lib/zodSchemas";
+import { moderate } from "$lib/util/moderate.server";
 
 export const actions = {
 	default: async ({ request, locals: { db, getSession } }) => {
@@ -24,6 +25,12 @@ export const actions = {
 
 		if (!safeParse.success) {
 			return { error: JSON.stringify(safeParse.error.issues) };
+		}
+
+		const flagged = await moderate(Object.values(prompt));
+
+		if (flagged) {
+			return { error: "Violates content policy." };
 		}
 
 		const { error: dbError } = await db.from("prompts").insert(prompt);

@@ -17,7 +17,7 @@
 		</form>
 	</div>
 	{#if form?.error}
-		<div class="flex">
+		<div class="flex mt-4">
 			{#if form.error === 'duplicate key value violates unique constraint "prompts_name_key"'}
 				<ErrorMessage error="Name is already taken, please enter a new name" />
 			{:else}
