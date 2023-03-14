@@ -1,5 +1,6 @@
 <script lang="ts">
 	import ButtonCreatePrompt from "$lib/components/ButtonCreatePrompt.svelte";
+	import StarSolid from "$lib/svg/StarSolid.svelte";
 
 	export let data;
 </script>
@@ -20,11 +21,18 @@
 					<ButtonCreatePrompt />
 				{/if}
 			</div>
-			<div class="mb-4 grid gap-4 md:grid-cols-3">
-				{#each data.profile.prompts as { name, description }}
-					<div class="card">
-						<h3 class="mb-2"><a href="/app/prompt/{name}">{name}</a></h3>
-						<p>{description}</p>
+			<div class="grid gap-4 md:grid-cols-3">
+				{#each data.profile.prompts as { name, description, created_at, stars }}
+					<div class="card flex flex-col gap-2">
+						<h3><a href="/app/prompt/{name}">{name}</a></h3>
+						<p class="h-full">{description}</p>
+						<div class="flex gap-4">
+							<span>{new Date(String(created_at)).toLocaleDateString()}</span>
+							<span class="flex items-center gap-1">
+								<StarSolid />
+								<span>{stars.length}</span>
+							</span>
+						</div>
 					</div>
 				{/each}
 			</div>

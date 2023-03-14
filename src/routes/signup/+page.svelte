@@ -2,6 +2,8 @@
 	import { enhance } from "$app/forms";
 	import ErrorMessage from "$lib/components/ErrorMessage.svelte";
 	import Head from "$lib/components/Head.svelte";
+	import { loading } from "$lib/stores";
+	import { loadingSubmitFunction } from "$lib/util/loadingSubmitFunction";
 
 	export let form;
 </script>
@@ -12,7 +14,11 @@
 	{#if form?.success}
 		Check your email to complete verification. <a href="/signin">Sign In</a>
 	{:else}
-		<form method="POST" use:enhance class="flex flex-col gap-4">
+		<form
+			method="POST"
+			use:enhance={loadingSubmitFunction}
+			class="flex flex-col gap-4"
+		>
 			<div>
 				<label>
 					Username
@@ -34,7 +40,7 @@
 				</label>
 			</div>
 
-			<button>Sign Up</button>
+			<button disabled={$loading}>Sign Up</button>
 		</form>
 	{/if}
 

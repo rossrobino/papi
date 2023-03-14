@@ -2,6 +2,8 @@
 	import { enhance } from "$app/forms";
 	import ErrorMessage from "$lib/components/ErrorMessage.svelte";
 	import Head from "$lib/components/Head.svelte";
+	import { loading } from "$lib/stores";
+	import { loadingSubmitFunction } from "$lib/util/loadingSubmitFunction";
 
 	export let form;
 </script>
@@ -13,12 +15,12 @@
 
 <section class="flex flex-col gap-4">
 	{#if !form?.success}
-		<form method="POST" use:enhance>
+		<form method="POST" use:enhance={loadingSubmitFunction}>
 			<label>
 				Email
 				<input type="email" name="email" required />
 			</label>
-			<button>Send Reset Link</button>
+			<button disabled={$loading}>Send Reset Link</button>
 		</form>
 	{:else}
 		<p>{form.success}</p>

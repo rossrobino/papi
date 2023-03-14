@@ -3,8 +3,11 @@
 @tailwind utilities;
 
 @layer base {
+	* {
+		@apply tabular-nums;
+	}
 	body {
-		@apply bg-stone-50 text-stone-900 selection:bg-stone-900 selection:text-stone-100;
+		@apply bg-stone-50 tabular-nums text-stone-900 selection:bg-stone-900 selection:text-stone-100;
 	}
 	input,
 	textarea,
@@ -14,7 +17,7 @@
 	}
 	button,
 	.btn {
-		@apply block rounded-full bg-stone-700 px-3 py-2 text-center font-semibold text-stone-100 no-underline shadow transition hover:bg-stone-800 active:scale-[98%] active:bg-stone-900 active:shadow-none disabled:animate-pulse disabled:bg-stone-400;
+		@apply block rounded-full bg-stone-700 px-3 py-2 text-center font-semibold text-stone-100 no-underline shadow transition hover:bg-stone-800 active:scale-[98%] active:bg-stone-900 active:shadow-none disabled:animate-pulse disabled:cursor-wait;
 	}
 	a {
 		@apply font-semibold underline decoration-teal-600 hover:decoration-dotted;
@@ -25,7 +28,7 @@
 	h4,
 	h5,
 	h6 {
-		@apply font-cal;
+		@apply font-cal proportional-nums;
 	}
 	h1 {
 		@apply text-4xl font-bold tracking-wide md:text-5xl;
@@ -71,7 +74,7 @@
 
 @layer components {
 	.card {
-		@apply rounded-3xl bg-stone-200 p-4 shadow;
+		@apply rounded-2xl bg-stone-200 p-4 shadow;
 	}
 	.btn-s {
 		@apply bg-teal-700 hover:bg-teal-800 active:bg-teal-900;

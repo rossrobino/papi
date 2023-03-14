@@ -1,7 +1,14 @@
 import { UserSchema } from "$lib/zodSchemas";
+import { error } from "@sveltejs/kit";
 
 export const actions = {
-	default: async ({ request, locals: { db } }) => {
+	default: async ({ request, locals: { db, getSession } }) => {
+		const session = await getSession();
+
+		if (!session) {
+			throw error(401, "Unauthorized");
+		}
+
 		const data = await request.formData();
 
 		const password = String(data.get("password"));

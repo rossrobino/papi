@@ -2,6 +2,8 @@
 	import { enhance } from "$app/forms";
 	import ErrorMessage from "$lib/components/ErrorMessage.svelte";
 	import Papi from "$lib/components/Papi.svelte";
+	import { loading } from "$lib/stores";
+	import { loadingSubmitFunction } from "$lib/util/loadingSubmitFunction";
 
 	export let form;
 
@@ -14,7 +16,7 @@
 		Delete your <Papi /> account. This will delete all information including all
 		prompts stored in <Papi />, this cannot be undone.
 	</p>
-	<form method="POST" use:enhance>
+	<form method="POST" use:enhance={loadingSubmitFunction}>
 		<label>
 			<div>
 				Please type <b>delete-my-account</b>
@@ -27,7 +29,7 @@
 				placeholder="delete-my-account"
 			/>
 		</label>
-		<button class="btn-warning">Delete</button>
+		<button disabled={$loading} class="btn-warning">Delete</button>
 	</form>
 	{#if form?.error}
 		<ErrorMessage error={form.error} />

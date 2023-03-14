@@ -11,11 +11,15 @@ export const load = async ({ parent, params }) => {
 			`
 			*,
 			prompts (
-				*
+				*,
+				stars (
+					user
+				)
 			)
 		`,
 		)
-		.eq("username", username);
+		.eq("username", username)
+		.order("created_at", { foreignTable: "prompts", ascending: false });
 
 	if (dbError) {
 		throw error(500, dbError.message);

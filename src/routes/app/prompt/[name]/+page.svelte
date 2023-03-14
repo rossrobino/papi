@@ -4,6 +4,9 @@
 	import { loading } from "$lib/stores";
 	import Prompt from "./Prompt.svelte";
 	import { info } from "$lib/info";
+	import StarOutline from "$lib/svg/StarOutline.svelte";
+	import StarSolid from "$lib/svg/StarSolid.svelte";
+	import { loadingSubmitFunction } from "$lib/util/loadingSubmitFunction";
 
 	export let data;
 	export let form;
@@ -48,25 +51,33 @@
 	};
 
 	$: dataString = stringifyDataParams(dataParams);
-
-	const onSubmit: SubmitFunction = () => {
-		$loading = true;
-		return async ({ update }) => {
-			update();
-			$loading = false;
-		};
-	};
 </script>
 
-<!-- only show edit button if user id matches the prompt's user -->
-{#if data.user?.id === data.prompt.profiles.id}
-	<div class="mb-8 flex justify-end md:-mt-[4.5rem]">
+<div class="mb-8 flex justify-end gap-4 md:-mt-[4.5rem]">
+	<form
+		action={data.isStarred ? "?/removeStar" : "?/star"}
+		method="POST"
+		use:enhance={loadingSubmitFunction}
+	>
+		<input type="hidden" name="id" value={data.prompt.id} />
+		<button class="flex items-center gap-1" disabled={$loading}>
+			{#if data.isStarred}
+				<StarSolid />
+			{:else}
+				<StarOutline />
+			{/if}
+			<span>Star ({data.prompt.stars.length})</span>
+		</button>
+	</form>
+
+	<!-- only show edit button if user id matches the prompt's user -->
+	{#if data.user?.id === data.prompt.profiles.id}
 		<a class="btn" href="/app/prompt/{data.prompt.name}/edit">Edit prompt</a>
-	</div>
-{/if}
+	{/if}
+</div>
 
 {#if data.prompt}
-	<div class="flex flex-col gap-4">
+	<div class="flex flex-col gap-8">
 		<Prompt editing={false} prompt={data.prompt} />
 		{#if dataParams.length}
 			<section class="flex flex-col gap-4">
@@ -105,7 +116,7 @@
 					{/if}
 				</div>
 
-				<form method="POST" action="?/run" use:enhance={onSubmit}>
+				<form method="POST" action="?/run" use:enhance={loadingSubmitFunction}>
 					<input type="hidden" value={dataString} name="dataString" />
 					<div class="flex items-end gap-2">
 						<p class="message">

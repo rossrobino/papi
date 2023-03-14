@@ -3,6 +3,9 @@
 	import "../app.css";
 	import "cal-sans";
 	import Papi from "$lib/components/Papi.svelte";
+	import { enhance } from "$app/forms";
+	import { loadingSubmitFunction } from "$lib/util/loadingSubmitFunction";
+	import { loading } from "$lib/stores";
 
 	export let data;
 </script>
@@ -20,8 +23,12 @@
 					username={data.username}
 				/>
 				{#if data.session}
-					<form action="/?/signOut" method="POST">
-						<button>Sign Out</button>
+					<form
+						action="/?/signOut"
+						method="POST"
+						use:enhance={loadingSubmitFunction}
+					>
+						<button disabled={$loading}>Sign Out</button>
 					</form>
 				{:else}
 					<a class="btn" href="/signin">Sign In</a>

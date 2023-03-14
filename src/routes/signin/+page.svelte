@@ -2,6 +2,8 @@
 	import { enhance } from "$app/forms";
 	import Head from "$lib/components/Head.svelte";
 	import ErrorMessage from "$lib/components/ErrorMessage.svelte";
+	import { loadingSubmitFunction } from "$lib/util/loadingSubmitFunction";
+	import { loading } from "$lib/stores";
 
 	export let form;
 </script>
@@ -9,7 +11,7 @@
 <Head title="Sign In" description="Sign into papi." />
 
 <section class="flex flex-col gap-4">
-	<form method="POST" use:enhance>
+	<form method="POST" use:enhance={loadingSubmitFunction}>
 		<div>
 			<label>
 				Email
@@ -28,7 +30,7 @@
 			<a href="/resetPassword">Forgot password</a>
 		</div>
 
-		<button>Sign In</button>
+		<button disabled={$loading}>Sign In</button>
 	</form>
 	{#if form?.error}
 		<div class="flex">

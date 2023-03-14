@@ -20,8 +20,18 @@ declare global {
 	type PromptWithProfile = Database["public"]["Tables"]["prompts"]["Row"] & {
 		profiles: Database["public"]["Tables"]["profiles"]["Row"];
 	};
+	type PromptWithProfileAndStars =
+		Database["public"]["Tables"]["prompts"]["Row"] & {
+			profiles: Database["public"]["Tables"]["profiles"]["Row"];
+			stars: Database["public"]["Tables"]["stars"]["Row"][];
+		};
+	type PromptWithProfileAndStarsCount =
+		Database["public"]["Tables"]["prompts"]["Row"] & {
+			profiles: Database["public"]["Tables"]["profiles"]["Row"];
+			stars: { count: number }[] | null;
+		};
 	type ProfileWithPrompts = Database["public"]["Tables"]["profiles"]["Row"] & {
-		prompts: Database["public"]["Tables"]["prompts"]["Row"][];
+		prompts: PromptWithProfileAndStars[];
 	};
 }
 

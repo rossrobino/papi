@@ -2,6 +2,8 @@
 	import { enhance } from "$app/forms";
 	import ErrorMessage from "$lib/components/ErrorMessage.svelte";
 	import Head from "$lib/components/Head.svelte";
+	import { loading } from "$lib/stores";
+	import { loadingSubmitFunction } from "$lib/util/loadingSubmitFunction";
 
 	export let form;
 
@@ -12,7 +14,7 @@
 <Head title="Create Prompt" description="Create a new prompt." />
 
 <section class="flex flex-col gap-4">
-	<form method="POST" use:enhance>
+	<form method="POST" use:enhance={loadingSubmitFunction}>
 		<div>
 			<label>
 				Name
@@ -51,7 +53,12 @@
 			<div>
 				<label>
 					Prompt
-					<textarea class="h-96" name="prompt" placeholder="Translate $$text$$ to Japanese" required />
+					<textarea
+						class="h-96"
+						name="prompt"
+						placeholder="Translate $$text$$ to Japanese"
+						required
+					/>
 				</label>
 			</div>
 		{:else if source === "github"}
@@ -78,7 +85,7 @@
 				</label>
 			</div>
 		{/if}
-		<button>Submit</button>
+		<button disabled={$loading}>Submit</button>
 	</form>
 	{#if form?.error}
 		<div class="flex">

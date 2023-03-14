@@ -14,6 +14,9 @@ export const load = async ({ parent, params, fetch }) => {
 			profiles (
 				id,
 				username
+			),
+			stars (
+				user
 			)
 		`,
 		)
@@ -23,7 +26,9 @@ export const load = async ({ parent, params, fetch }) => {
 		throw error(500, dbError.message);
 	}
 
-	const prompt = tableData[0] as PromptWithProfile;
+	const prompt = tableData[0] as PromptWithProfileAndStars;
+
+	console.log(prompt.stars);
 
 	if (prompt.source === "github") {
 		prompt.prompt = await githubContents(
@@ -37,8 +42,24 @@ export const load = async ({ parent, params, fetch }) => {
 		throw error(404, "Prompt not found");
 	}
 
+	let isStarred = false;
+
+	if (session) {
+		const { data: checkStarred, error: checkStarredError } = await db
+			.from("stars")
+			.select()
+			.eq("user", session?.user.id)
+			.eq("prompt", prompt.id);
+
+		if (checkStarredError) {
+			throw error(500, checkStarredError.message);
+		}
+		isStarred = Boolean(checkStarred?.length);
+	}
+
 	return {
 		user: session?.user,
 		prompt,
+		isStarred,
 	};
 };

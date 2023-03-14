@@ -2,7 +2,9 @@
 	import { enhance } from "$app/forms";
 	import DataText from "$lib/components/DataText.svelte";
 	import type { Database } from "$lib/db/types";
+	import { loading } from "$lib/stores";
 	import GitHub from "$lib/svg/GitHub.svelte";
+	import { loadingSubmitFunction } from "$lib/util/loadingSubmitFunction";
 
 	type PromptWithProfile = Database["public"]["Tables"]["prompts"]["Row"] & {
 		profiles: Database["public"]["Tables"]["profiles"]["Row"];
@@ -16,7 +18,7 @@
 	let source = prompt.source;
 </script>
 
-<form method="POST" action="?/edit" use:enhance>
+<form method="POST" action="?/edit" use:enhance={loadingSubmitFunction}>
 	<input type="hidden" name="id" value={prompt.id} />
 	{#if editing}
 		<section class="flex flex-col gap-4">
@@ -24,12 +26,14 @@
 			<input type="text" name="name" bind:value={prompt.name} />
 		</section>
 	{/if}
-	<div class="grid gap-4 md:grid-cols-3">
+	<div class="grid gap-8 md:grid-cols-3">
 		<section class="flex flex-col gap-4">
 			<h2>About</h2>
-			<a href="/app/profile/{prompt.profiles.username}" class="font-semibold">
-				@{prompt.profiles.username}
-			</a>
+			<div>
+				<a href="/app/profile/{prompt.profiles.username}" class="font-semibold">
+					@{prompt.profiles.username}
+				</a>
+			</div>
 			<div class="font-semibold">
 				{new Date(String(prompt.created_at)).toLocaleDateString()}
 			</div>
@@ -113,6 +117,6 @@
 	</div>
 
 	{#if editing}
-		<button>Submit</button>
+		<button disabled={$loading}>Submit</button>
 	{/if}
 </form>

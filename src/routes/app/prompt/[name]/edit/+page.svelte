@@ -2,6 +2,8 @@
 	import Prompt from "../Prompt.svelte";
 	import { enhance } from "$app/forms";
 	import ErrorMessage from "$lib/components/ErrorMessage.svelte";
+	import { loading } from "$lib/stores";
+	import { loadingSubmitFunction } from "$lib/util/loadingSubmitFunction";
 
 	export let data;
 	export let form;
@@ -10,8 +12,8 @@
 {#if data.prompt}
 	<div class="flex flex-col gap-4">
 		<Prompt editing={true} prompt={data.prompt} />
-		<form method="POST" action="?/delete" use:enhance>
-			<button class="btn-warning">Delete</button>
+		<form method="POST" action="?/delete" use:enhance={loadingSubmitFunction}>
+			<button disabled={$loading} class="btn-warning">Delete</button>
 		</form>
 	</div>
 	{#if form?.error}
