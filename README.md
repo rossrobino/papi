@@ -27,3 +27,4 @@ Run a prompt like a function--use the $ syntax to insert variables into a prompt
 - [openai](https://github.com/openai)
 - [colinhacks/zod](https://github.com/colinhacks/zod)
 - [calcom/font](https://github.com/calcom/font)
+- [vercel](https://github.com/vercel)
