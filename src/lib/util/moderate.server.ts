@@ -17,27 +17,3 @@ export const moderate = async (text: string | string[]) => {
 	});
 	return flagged;
 };
-
-const exampleReponse = [
-	{
-		flagged: false,
-		categories: {
-			sexual: false,
-			hate: false,
-			violence: false,
-			"self-harm": false,
-			"sexual/minors": false,
-			"hate/threatening": false,
-			"violence/graphic": false,
-		},
-		category_scores: {
-			sexual: 0.11911293864250183,
-			hate: 0.00034095876617357135,
-			violence: 0.0000020004733869427582,
-			"self-harm": 2.0692729307825175e-8,
-			"sexual/minors": 0.000016815050912555307,
-			"hate/threatening": 2.1237431258036565e-10,
-			"violence/graphic": 7.807685875604875e-8,
-		},
-	},
-];
