@@ -1,6 +1,8 @@
 export const load = async ({ parent }) => {
 	const { db, session } = await parent();
 
+	// NEW
+
 	const { data: newPromptData, error: newPromptError } = await db
 		.from("prompts")
 		.select(
@@ -22,6 +24,9 @@ export const load = async ({ parent }) => {
 		? []
 		: (newPromptData as PromptWithProfileAndStars[]);
 
+	// TRENDING
+
+	// seven days ago
 	const startDate = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
 
 	const { data: trendingData, error: trendingError } = await db
@@ -45,10 +50,9 @@ export const load = async ({ parent }) => {
 		? []
 		: (trendingData as PromptWithProfileAndStarsCount[]);
 
+	// last 6 items of response
+	trendingPrompts?.slice(Math.max(trendingPrompts.length - 6, 0));
 	trendingPrompts?.reverse();
-	trendingPrompts?.splice(6);
-
-	console.log(trendingData);
 
 	return {
 		user: session?.user,

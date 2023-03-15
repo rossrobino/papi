@@ -28,8 +28,6 @@ export const load = async ({ parent, params, fetch }) => {
 
 	const prompt = tableData[0] as PromptWithProfileAndStars;
 
-	console.log(prompt.stars);
-
 	if (prompt.source === "github") {
 		prompt.prompt = await githubContents(
 			String(prompt.repository),

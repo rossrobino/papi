@@ -10,14 +10,16 @@
 </script>
 
 {#if data.prompt}
+	<h2 class="mb-4 mt-12 text-lg">All prompts are shared publicly.</h2>
 	<div class="flex flex-col gap-4">
 		<Prompt editing={true} prompt={data.prompt} />
 		<form method="POST" action="?/delete" use:enhance={loadingSubmitFunction}>
+			<input type="hidden" name="id" value={data.prompt.id} />
 			<button disabled={$loading} class="btn-warning">Delete</button>
 		</form>
 	</div>
 	{#if form?.error}
-		<div class="flex mt-4">
+		<div class="mt-4 flex">
 			{#if form.error === 'duplicate key value violates unique constraint "prompts_name_key"'}
 				<ErrorMessage error="Name is already taken, please enter a new name" />
 			{:else}

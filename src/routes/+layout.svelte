@@ -15,7 +15,7 @@
 		<header class="mb-12 p-4">
 			<div class="mb-6 flex items-center justify-between gap-4 md:mb-0">
 				<div class="text-4xl font-bold">
-					<a href="/"><Papi /></a>
+					<a href="/"><Papi version="alpha" /></a>
 				</div>
 				<NavLinks
 					class="hidden md:flex"

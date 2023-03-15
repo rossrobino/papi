@@ -28,8 +28,6 @@ export const GET = async ({ url, params, locals: { db }, fetch }) => {
 
 	const promptWithData = insertDataIntoPrompt(data, prompt);
 
-	console.log(promptWithData);
-
 	const configuration = new Configuration({
 		apiKey: OPENAI_API_KEY,
 	});

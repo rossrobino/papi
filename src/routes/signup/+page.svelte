@@ -8,7 +8,11 @@
 	export let form;
 </script>
 
-<Head title="Sign Up" description="Create a papi account." />
+<Head
+	title="Sign Up"
+	description="Create a papi account."
+	tagline="All usernames and prompts created are shared publicly."
+/>
 
 <section class="flex flex-col gap-4">
 	{#if form?.success}

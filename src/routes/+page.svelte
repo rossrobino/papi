@@ -6,7 +6,7 @@
 </script>
 
 <Head
-	title="A Prompt Manager and API"
+	title="A Prompt Library and Tester"
 	description="Use papi to manage your prompts for ai models."
 />
 
@@ -14,32 +14,45 @@
 	<section class="flex flex-col gap-4">
 		<h2>Library</h2>
 		<p>
-			Create prompts for AI models and share them with others. <Papi />
-			currently uses the
-			<a href="/">gpt-3.5-turbo</a>
-			model.
+			Create prompts for AI models and share them with others with a unique
+			link. Write prompts in <Papi /> or link a prompt from a GitHub repository to
+			test and share with others.
+		</p>
+		<p>
+			<a href="{info.baseUrl}/app/prompt/your-prompt-name">
+				{info.baseUrl}/app/prompt/your-prompt-name
+			</a>
 		</p>
 	</section>
 
 	<section class="flex flex-col gap-4">
 		<h2>Functions</h2>
 		<p>
-			Run a prompt like a function. Use the<DataText value="data" />syntax to
-			insert data as variables directly into a prompt.
+			Run a prompt like a function--use the<DataText value="data" />syntax to
+			insert variables into a prompt. <Papi />
+			currently uses OpenAi's
+			<a href="https://platform.openai.com/docs/models/gpt-3-5">
+				gpt-3.5-turbo
+			</a>
+			model to run prompts.
 		</p>
 	</section>
 
 	<section class="flex flex-col gap-4">
-		<h2>API</h2>
+		<h2>Open Source</h2>
 		<p>
-			Use the API to access prompts in any application with no additional setup
-			required.
+			<Papi /> is open sourced under the MIT License. Check out the project on
+			<a href="https://github.com/rossrobino/papi">GitHub</a>
+			to contribute, share feedback, or create issues.
 		</p>
 		<p>
-			<code>{info.baseUrl}/api/your-prompt-name</code>
+			<Papi /> is currently in
+			<b>alpha,</b>
+			please be aware there could be bugs or downtime with the application.
 		</p>
 	</section>
+
 	<div class="flex justify-center">
-		<a class="btn btn-s px-8 py-4 text-xl" href="/app">Get Started</a>
+		<a class="btn btn-s px-8 py-4 text-xl" href="/signin">Get Started</a>
 	</div>
 </div>

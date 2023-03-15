@@ -9,6 +9,7 @@
 </script>
 
 {#if data.profile}
+	<h2 class="mb-4 mt-12 text-lg">All information is shared publicly.</h2>
 	<section class="flex flex-col gap-4">
 		<form method="POST" use:enhance={loadingSubmitFunction}>
 			<label>
@@ -34,6 +35,9 @@
 						required
 					/>
 				</div>
+				<span class="text-xs">
+					Link a GitHub account to display your profile picture on your page.
+				</span>
 			</label>
 			<button disabled={$loading}>Submit</button>
 			<div class="flex justify-between gap-4">

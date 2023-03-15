@@ -11,7 +11,11 @@
 	let source = "papi";
 </script>
 
-<Head title="Create Prompt" description="Create a new prompt." />
+<Head
+	title="Create Prompt"
+	description="Create a new prompt."
+	tagline="All prompts are shared publicly."
+/>
 
 <section class="flex flex-col gap-4">
 	<form method="POST" use:enhance={loadingSubmitFunction}>

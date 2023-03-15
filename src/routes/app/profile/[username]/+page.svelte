@@ -6,13 +6,6 @@
 </script>
 
 {#if data.profile}
-	{#if data.profile.id === data.session?.user.id}
-		<div class="mb-8 flex justify-end md:-mt-[5.5rem] md:mb-14">
-			<a class="btn" href="/app/profile/{data.profile.username}/edit">
-				Edit profile
-			</a>
-		</div>
-	{/if}
 	<div class="flex flex-col gap-4">
 		<section>
 			<div class="mb-4 flex items-center justify-between gap-4">
@@ -22,19 +15,23 @@
 				{/if}
 			</div>
 			<div class="grid gap-4 md:grid-cols-3">
-				{#each data.profile.prompts as { name, description, created_at, stars }}
-					<div class="card flex flex-col gap-2">
-						<h3><a href="/app/prompt/{name}">{name}</a></h3>
-						<p class="h-full">{description}</p>
-						<div class="flex gap-4">
-							<span>{new Date(String(created_at)).toLocaleDateString()}</span>
-							<span class="flex items-center gap-1">
-								<StarSolid />
-								<span>{stars.length}</span>
-							</span>
+				{#if data.profile.prompts.length}
+					{#each data.profile.prompts as { name, description, created_at, stars }}
+						<div class="card flex flex-col gap-2">
+							<h3><a href="/app/prompt/{name}">{name}</a></h3>
+							<p class="h-full">{description}</p>
+							<div class="flex gap-4">
+								<span>{new Date(String(created_at)).toLocaleDateString()}</span>
+								<span class="flex items-center gap-1">
+									<StarSolid />
+									<span>{stars.length}</span>
+								</span>
+							</div>
 						</div>
-					</div>
-				{/each}
+					{/each}
+				{:else}
+					<p>No prompts created.</p>
+				{/if}
 			</div>
 		</section>
 	</div>

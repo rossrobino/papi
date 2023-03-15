@@ -53,7 +53,7 @@
 		<div class="mb-8 flex items-center justify-between gap-4">
 			<h2>Trending</h2>
 		</div>
-		<div class="grid md:grid-cols-3 gap-4">
+		<div class="grid gap-4 md:grid-cols-3">
 			{#each data.trendingPrompts as { name, stars, description, created_at, profiles }}
 				<div class="card flex flex-col gap-2">
 					<h3>

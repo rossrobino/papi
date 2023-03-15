@@ -33,6 +33,9 @@ declare global {
 	type ProfileWithPrompts = Database["public"]["Tables"]["profiles"]["Row"] & {
 		prompts: PromptWithProfileAndStars[];
 	};
+	type StarsWithPrompt = Database["public"]["Tables"]["stars"]["Row"] & {
+		prompts: PromptWithProfileAndStarsCount;
+	};
 }
 
 export {};

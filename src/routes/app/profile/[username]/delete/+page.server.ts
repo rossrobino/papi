@@ -32,6 +32,47 @@ export const actions = {
 		const confirm = data.get("confirm");
 
 		if (confirm === "delete-my-account") {
+			// delete stars associated with the user's prompts
+			const { data: userPrompts, error: getPromptsError } = await db
+				.from("prompts")
+				.select()
+				.eq("user", session.user.id);
+
+			if (getPromptsError) {
+				return { error: getPromptsError.message };
+			}
+
+			let orString = "";
+
+			userPrompts.forEach((prompt, i) => {
+				orString += `prompt.eq.${prompt.id}`;
+				if (i !== userPrompts.length - 1) {
+					orString += ",";
+				}
+			});
+
+			if (orString) {
+				const { error: deleteStarsError } = await db
+					.from("stars")
+					.delete()
+					.or(orString);
+
+				if (deleteStarsError) {
+					return { error: deleteStarsError.message };
+				}
+			}
+
+			// delete the user's starred prompts
+			const { error: deleteUserStarsError } = await db
+				.from("stars")
+				.delete()
+				.eq("user", session.user.id);
+
+			if (deleteUserStarsError) {
+				return { error: deleteUserStarsError.message };
+			}
+
+			// delete prompts
 			const { error: promptsError } = await db
 				.from("prompts")
 				.delete()

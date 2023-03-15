@@ -45,11 +45,24 @@ export const actions = {
 
 		throw redirect(303, `/app/prompt/${prompt.name}`);
 	},
-	delete: async ({ params, locals: { db, getSession } }) => {
+	delete: async ({ params, request, locals: { db, getSession } }) => {
 		const session = await getSession();
 
 		if (!session) {
 			throw error(401, "Unauthorized");
+		}
+
+		const data = await request.formData();
+		const id = String(data.get("id"));
+
+		// delete stars associated with the prompt
+		const { error: deleteStarsError } = await db
+			.from("stars")
+			.delete()
+			.eq("prompt", id);
+		
+		if (deleteStarsError) {
+			throw error(500, deleteStarsError.message);
 		}
 
 		const name = params.name;

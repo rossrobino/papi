@@ -40,6 +40,7 @@ export interface Database {
 					repository: string | null;
 					source: string;
 					user: string;
+					stars_count: number | null;
 				};
 				Insert: {
 					created_at?: string | null;
@@ -89,7 +90,12 @@ export interface Database {
 			[_ in never]: never;
 		};
 		Functions: {
-			[_ in never]: never;
+			stars_count: {
+				Args: {
+					"": unknown;
+				};
+				Returns: number;
+			};
 		};
 		Enums: {
 			[_ in never]: never;

@@ -79,30 +79,29 @@
 {#if data.prompt}
 	<div class="flex flex-col gap-8">
 		<Prompt editing={false} prompt={data.prompt} />
-		{#if dataParams.length}
-			<section class="flex flex-col gap-4">
-				<h2>Data</h2>
-				<table class="table-fixed">
-					<thead>
-						<tr>
-							<th>key</th>
-							<th>value</th>
-						</tr>
-					</thead>
-					<tbody>
-						{#each dataParams as { key, value }}
+		<div class="grid gap-8" class:md:grid-cols-2={dataParams.length}>
+			{#if dataParams.length}
+				<section class="flex flex-col gap-4">
+					<h2>Data</h2>
+					<table class="table-fixed">
+						<thead>
 							<tr>
-								<th>{key}</th>
-								<td><input class="w-full" bind:value /></td>
+								<th>key</th>
+								<th>value</th>
 							</tr>
-						{/each}
-					</tbody>
-				</table>
-			</section>
-		{/if}
-		<section class="flex flex-col gap-4">
-			<h2>Run</h2>
-			<div class="flex flex-col gap-4 rounded-3xl bg-stone-50 p-4 shadow">
+						</thead>
+						<tbody>
+							{#each dataParams as { key, value }}
+								<tr>
+									<th>{key}</th>
+									<td><input class="w-full" bind:value /></td>
+								</tr>
+							{/each}
+						</tbody>
+					</table>
+				</section>
+			{/if}
+			<section class="flex flex-col justify-end gap-4">
 				<div class="min-h-[40px]">
 					{#if form?.answer && !$loading}
 						<blockquote>
@@ -142,11 +141,7 @@
 						</button>
 					</div>
 				</form>
-			</div>
-			<h2 class="mt-4">Endpoint</h2>
-			<a href="/api/{data.prompt.name}{dataString}">
-				{info.baseUrl}/api/{data.prompt.name}{dataString}
-			</a>
-		</section>
+			</section>
+		</div>
 	</div>
 {/if}
