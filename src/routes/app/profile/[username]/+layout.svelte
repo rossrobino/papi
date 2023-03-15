@@ -24,10 +24,10 @@
 		/>
 		{#if data.profile.github}
 			<a
-				class="flex items-center gap-1"
+				class="flex items-center gap-0.5"
 				href="https://github.com/{data.profile.github}"
 			>
-				<GitHub />@{data.profile.github}
+				<GitHub />{data.profile.github}
 			</a>
 		{/if}
 	</div>
@@ -48,6 +48,7 @@
 			class="rounded-tr-2xl p-4"
 			class:bg-teal-700={!stars}
 			class:text-stone-50={!stars}
+			class:no-underline={!stars}
 			href="/app/profile/{data.profile.username}"
 		>
 			Prompts
@@ -56,6 +57,7 @@
 			class="rounded-tl-2xl p-4"
 			class:bg-teal-700={stars}
 			class:text-stone-50={stars}
+			class:no-underline={stars}
 			href="/app/profile/{data.profile.username}/stars"
 		>
 			Stars

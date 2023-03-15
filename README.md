@@ -1,6 +1,6 @@
 # papi.run
 
-## A Prompt Manager and API
+## A Prompt Library and Tester
 
 ## Library
 

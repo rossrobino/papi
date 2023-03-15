@@ -25,16 +25,13 @@
 			</label>
 			<label>
 				GitHub
-				<div class="flex items-center gap-2">
-					<span>@</span>
-					<input
-						type="text"
-						class="basis-full"
-						name="github"
-						value={data.profile.github}
-						required
-					/>
-				</div>
+				<input
+					type="text"
+					class="basis-full"
+					name="github"
+					value={data.profile.github}
+					required
+				/>
 				<span class="text-xs">
 					Link a GitHub account to display your profile picture on your page.
 				</span>
