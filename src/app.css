@@ -17,7 +17,7 @@
 	}
 	button,
 	.btn {
-		@apply block rounded-full bg-stone-700 px-3 py-2 text-center font-semibold text-stone-100 no-underline shadow transition hover:bg-stone-800 active:scale-[98%] active:bg-stone-900 active:shadow-none disabled:animate-pulse disabled:cursor-wait;
+		@apply block rounded-full bg-stone-800 px-3 py-2 text-center font-semibold capitalize text-stone-100 no-underline shadow hover:bg-stone-700 active:scale-[99%] active:bg-stone-900 active:shadow-none disabled:animate-pulse disabled:cursor-wait;
 	}
 	a {
 		@apply font-semibold underline decoration-teal-600 hover:decoration-dotted;
@@ -77,7 +77,7 @@
 		@apply rounded-2xl bg-stone-200 p-4 shadow;
 	}
 	.btn-s {
-		@apply bg-teal-700 hover:bg-teal-800 active:bg-teal-900;
+		@apply bg-teal-700 hover:bg-teal-600 active:bg-teal-800;
 	}
 	.btn-ghost {
 		@apply bg-stone-50 text-stone-900 shadow-none hover:bg-stone-200 hover:shadow active:bg-stone-300;
@@ -86,6 +86,12 @@
 		@apply bg-rose-700 hover:bg-rose-800 active:bg-rose-900;
 	}
 	.message {
-		@apply basis-full whitespace-pre-wrap rounded-3xl bg-teal-600 px-4 py-3 text-stone-100 shadow;
+		@apply basis-full whitespace-pre-wrap rounded-3xl bg-teal-700 px-4 py-3 text-stone-100 shadow;
+	}
+	.tab {
+		@apply rounded-xl py-2 px-2 hover:bg-stone-200 hover:no-underline;
+	}
+	.tab-selected {
+		@apply bg-stone-200 no-underline;
 	}
 }

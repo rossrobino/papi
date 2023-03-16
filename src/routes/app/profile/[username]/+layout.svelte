@@ -43,21 +43,17 @@
 
 {#if !editing}
 	<!-- TABS -->
-	<div class="-mx-4 grid grid-cols-2 border-b-4 border-teal-700 md:mb-8">
+	<div class="mb-4 flex gap-2">
 		<a
-			class="rounded-tr-2xl p-4"
-			class:bg-teal-700={!stars}
-			class:text-stone-50={!stars}
-			class:no-underline={!stars}
+			class="tab"
+			class:tab-selected={!stars}
 			href="/app/profile/{data.profile.username}"
 		>
 			Prompts
 		</a>
 		<a
-			class="rounded-tl-2xl p-4"
-			class:bg-teal-700={stars}
-			class:text-stone-50={stars}
-			class:no-underline={stars}
+			class="tab"
+			class:tab-selected={stars}
 			href="/app/profile/{data.profile.username}/stars"
 		>
 			Stars

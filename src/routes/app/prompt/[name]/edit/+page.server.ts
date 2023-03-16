@@ -60,7 +60,7 @@ export const actions = {
 			.from("stars")
 			.delete()
 			.eq("prompt", id);
-		
+
 		if (deleteStarsError) {
 			throw error(500, deleteStarsError.message);
 		}

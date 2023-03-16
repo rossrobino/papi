@@ -93,8 +93,12 @@
 						<tbody>
 							{#each dataParams as { key, value }}
 								<tr>
-									<th>{key}</th>
-									<td><input class="w-full" bind:value /></td>
+									<th>
+										<label for="{key}{value}">
+											{key}
+										</label>
+									</th>
+									<td><input class="w-full" id="{key}{value}" bind:value /></td>
 								</tr>
 							{/each}
 						</tbody>

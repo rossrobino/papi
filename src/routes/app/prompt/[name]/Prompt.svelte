@@ -23,7 +23,10 @@
 	{#if editing}
 		<section class="flex flex-col gap-4">
 			<h2>Name</h2>
-			<input type="text" name="name" bind:value={prompt.name} />
+			<label>
+				Name
+				<input type="text" name="name" bind:value={prompt.name} />
+			</label>
 		</section>
 	{/if}
 	<div class="grid gap-8 md:grid-cols-3">
@@ -38,11 +41,14 @@
 				{new Date(String(prompt.created_at)).toLocaleDateString()}
 			</div>
 			{#if editing}
-				<textarea
-					name="description"
-					class="h-full"
-					value={prompt.description}
-				/>
+				<label>
+					Description
+					<textarea
+						name="description"
+						class="h-full"
+						value={prompt.description}
+					/>
+				</label>
 			{:else}
 				<div class="whitespace-pre-wrap">{prompt.description}</div>
 			{/if}
@@ -61,7 +67,10 @@
 				</div>
 			{/if}
 			{#if editing && source === "papi"}
-				<textarea class="h-96" name="prompt" value={prompt.prompt} />
+				<label>
+					Prompt
+					<textarea class="h-96" name="prompt" value={prompt.prompt} />
+				</label>
 			{:else if !editing}
 				<div class="h-full">
 					<p class="whitespace-pre-wrap">

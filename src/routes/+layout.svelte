@@ -15,7 +15,7 @@
 		<header class="mb-12 p-4">
 			<div class="mb-6 flex items-center justify-between gap-4 md:mb-0">
 				<div class="text-4xl font-bold">
-					<a href="/"><Papi version="alpha" /></a>
+					<a href="/" class="no-underline"><Papi /></a>
 				</div>
 				<NavLinks
 					class="hidden md:flex"
@@ -45,7 +45,7 @@
 		</main>
 	</div>
 
-	<footer class="mt-12 flex flex-col gap-4 bg-stone-100 p-4">
+	<footer class="mt-12 flex flex-col gap-4 bg-stone-900 p-4 text-stone-50">
 		<div>
 			<a href="/">Home</a>
 		</div>

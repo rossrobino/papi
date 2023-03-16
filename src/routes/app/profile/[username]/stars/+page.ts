@@ -37,8 +37,6 @@ export const load = async ({ parent, params }) => {
 
 	const stars = tableData as StarsWithPrompt[];
 
-	console.log(stars);
-
 	if (!stars) {
 		throw error(404, "User not found.");
 	}

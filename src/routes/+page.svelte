@@ -8,6 +8,7 @@
 <Head
 	title="A Prompt Library and Tester"
 	description="Use papi to manage your prompts for ai models."
+	class="text-teal-700"
 />
 
 <div class="flex flex-col gap-8">
