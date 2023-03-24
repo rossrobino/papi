@@ -1,4 +1,4 @@
-import { error, redirect } from "@sveltejs/kit";
+import { error, fail, redirect } from "@sveltejs/kit";
 import { UserSchema } from "$lib/zodSchemas";
 
 export const actions = {
@@ -22,7 +22,7 @@ export const actions = {
 		}).safeParse(user);
 
 		if (!safeParse.success) {
-			return { error: JSON.stringify(safeParse.error.issues) };
+			return fail(400, { error: JSON.stringify(safeParse.error.issues) });
 		}
 
 		const { error: dbError } = await db
@@ -31,7 +31,7 @@ export const actions = {
 			.eq("id", session.user.id);
 
 		if (dbError) {
-			return { error: dbError.message };
+			return fail(500, { error: dbError.message });
 		}
 
 		throw redirect(303, `/app/profile/${user.username}`);

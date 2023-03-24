@@ -1,4 +1,4 @@
-import { error, redirect } from "@sveltejs/kit";
+import { error, fail, redirect } from "@sveltejs/kit";
 import { PromptSchema } from "$lib/zodSchemas";
 import { moderate } from "$lib/util/moderate.server";
 
@@ -24,19 +24,19 @@ export const actions = {
 		const safeParse = PromptSchema.safeParse(prompt);
 
 		if (!safeParse.success) {
-			return { error: JSON.stringify(safeParse.error.issues) };
+			return fail(400, { error: JSON.stringify(safeParse.error.issues) });
 		}
 
 		const flagged = await moderate(Object.values(prompt));
 
 		if (flagged) {
-			return { error: "Violates content policy." };
+			return fail(400, { error: "Violates content policy." });
 		}
 
 		const { error: dbError } = await db.from("prompts").insert(prompt);
 
 		if (dbError) {
-			return { error: dbError.message };
+			return fail(500, { error: dbError.message });
 		}
 
 		throw redirect(303, "/app/prompt/" + prompt.name);

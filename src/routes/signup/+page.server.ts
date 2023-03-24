@@ -1,9 +1,8 @@
-import { redirect } from "@sveltejs/kit";
+import { fail, redirect } from "@sveltejs/kit";
 import { UserSchema } from "$lib/zodSchemas";
 
 export const actions = {
 	default: async ({ request, locals: { db } }) => {
-		let success = false;
 		const formData = await request.formData();
 
 		const user = {
@@ -20,7 +19,7 @@ export const actions = {
 		}).safeParse(user);
 
 		if (!safeParse.success) {
-			return { error: JSON.stringify(safeParse.error.issues) };
+			return fail(400, { error: JSON.stringify(safeParse.error.issues) });
 		}
 
 		const { error: dbError } = await db.auth.signUp({
@@ -32,13 +31,11 @@ export const actions = {
 		});
 
 		if (dbError) {
-			return { error: dbError.message };
-		} else {
-			success = true;
+			return fail(500, { error: dbError.message });
 		}
 
 		// displays message to check email
-		return { success };
+		return { success: true };
 	},
 };
 

@@ -1,4 +1,4 @@
-import { error, redirect } from "@sveltejs/kit";
+import { error, fail, redirect } from "@sveltejs/kit";
 import { AuthApiError } from "@supabase/supabase-js";
 import { UserSchema } from "$lib/zodSchemas";
 
@@ -18,16 +18,18 @@ export const actions = {
 		}).safeParse(user);
 
 		if (!safeParse.success) {
-			return { error: JSON.stringify(safeParse.error.issues) };
+			return fail(400, {
+				error: JSON.stringify(safeParse.error.issues),
+			});
 		}
 
 		const { error: dbError } = await db.auth.signInWithPassword(user);
 
 		if (dbError) {
 			if (dbError instanceof AuthApiError && dbError.status === 400) {
-				return { error: dbError.message };
+				return fail(400, { error: dbError.message });
 			}
-			throw error(500, "Server error. Try again later.");
+			throw error(500, dbError.message);
 		}
 
 		// where to send after login successful

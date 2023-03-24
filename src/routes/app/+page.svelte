@@ -8,6 +8,35 @@
 <Head title="Dashboard" description="Browse popular prompts. " />
 
 <div class="flex flex-col gap-8">
+	{#if data.trendingPrompts.length}
+		<section>
+			<div class="mb-8 flex items-center justify-between gap-4">
+				<h2>Trending</h2>
+			</div>
+			<div class="grid gap-4 md:grid-cols-3">
+				{#each data.trendingPrompts as { name, stars, description, created_at, profiles }}
+					<div class="card flex flex-col gap-2">
+						<h3>
+							<a href="/app/prompt/{name}">{name}</a>
+						</h3>
+						<p class="h-full">{description}</p>
+						<div class="flex flex-wrap gap-4">
+							<span>{new Date(String(created_at)).toLocaleDateString()}</span>
+							<a href="/app/profile/{profiles.username}">
+								@{profiles.username}
+							</a>
+							<span class="flex items-center gap-1">
+								<StarSolid />
+								<span>
+									{stars?.length}
+								</span>
+							</span>
+						</div>
+					</div>
+				{/each}
+			</div>
+		</section>
+	{/if}
 	<section>
 		<div class="mb-8 flex items-center justify-between gap-4">
 			<h2>New</h2>
@@ -48,34 +77,4 @@
 			{/if}
 		</div>
 	</section>
-
-	{#if data.trendingPrompts.length}
-		<section>
-			<div class="mb-8 flex items-center justify-between gap-4">
-				<h2>Trending</h2>
-			</div>
-			<div class="grid gap-4 md:grid-cols-3">
-				{#each data.trendingPrompts as { name, stars, description, created_at, profiles }}
-					<div class="card flex flex-col gap-2">
-						<h3>
-							<a href="/app/prompt/{name}">{name}</a>
-						</h3>
-						<p class="h-full">{description}</p>
-						<div class="flex gap-4">
-							<span>{new Date(String(created_at)).toLocaleDateString()}</span>
-							<a href="/app/profile/{profiles.username}">
-								@{profiles.username}
-							</a>
-							<span class="flex items-center gap-1">
-								<StarSolid />
-								<span>
-									{stars?.length}
-								</span>
-							</span>
-						</div>
-					</div>
-				{/each}
-			</div>
-		</section>
-	{/if}
 </div>

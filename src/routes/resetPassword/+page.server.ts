@@ -1,5 +1,6 @@
 import { info } from "$lib/info";
 import { UserSchema } from "$lib/zodSchemas";
+import { fail } from "@sveltejs/kit";
 
 export const actions = {
 	default: async ({ request, locals: { db } }) => {
@@ -10,7 +11,7 @@ export const actions = {
 		const safeParse = UserSchema.pick({ email: true }).safeParse({ email });
 
 		if (!safeParse.success) {
-			return { error: JSON.stringify(safeParse.error.issues) };
+			return fail(400, { error: JSON.stringify(safeParse.error.issues) });
 		}
 
 		const { error: dbError } = await db.auth.resetPasswordForEmail(email, {
@@ -18,7 +19,7 @@ export const actions = {
 		});
 
 		if (dbError) {
-			return { error: dbError.message };
+			return fail(500, { error: dbError.message });
 		}
 
 		return {

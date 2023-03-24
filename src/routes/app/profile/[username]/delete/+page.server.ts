@@ -1,4 +1,4 @@
-import { error, redirect } from "@sveltejs/kit";
+import { error, fail, redirect } from "@sveltejs/kit";
 import { adminAuthClient } from "$lib/db/adminAuthClient.server";
 
 export const load = async ({ params, locals: { db, getSession } }) => {
@@ -39,7 +39,7 @@ export const actions = {
 				.eq("user", session.user.id);
 
 			if (getPromptsError) {
-				return { error: getPromptsError.message };
+				return fail(500, { error: getPromptsError.message });
 			}
 
 			let orString = "";
@@ -58,7 +58,7 @@ export const actions = {
 					.or(orString);
 
 				if (deleteStarsError) {
-					return { error: deleteStarsError.message };
+					return fail(500, { error: deleteStarsError.message });
 				}
 			}
 
@@ -69,7 +69,7 @@ export const actions = {
 				.eq("user", session.user.id);
 
 			if (deleteUserStarsError) {
-				return { error: deleteUserStarsError.message };
+				return fail(500, { error: deleteUserStarsError.message });
 			}
 
 			// delete prompts
@@ -79,7 +79,7 @@ export const actions = {
 				.eq("user", session.user.id);
 
 			if (promptsError) {
-				return { error: promptsError.message };
+				return fail(500, { error: promptsError.message });
 			}
 
 			const { error: profilesError } = await db
@@ -88,13 +88,13 @@ export const actions = {
 				.eq("id", session.user.id);
 
 			if (profilesError) {
-				return { error: profilesError.message };
+				return fail(500, { error: profilesError.message });
 			}
 
 			const { error: signoutError } = await db.auth.signOut();
 
 			if (signoutError) {
-				return { error: signoutError.message };
+				return fail(500, { error: signoutError.message });
 			}
 
 			const { error: userError } = await adminAuthClient.deleteUser(
@@ -102,12 +102,12 @@ export const actions = {
 			);
 
 			if (userError) {
-				return { error: userError.message };
+				return fail(500, { error: userError.message });
 			}
 		} else {
-			return {
+			return fail(400, {
 				error: 'Please confirm by typing "delete-my-account" into the form.',
-			};
+			});
 		}
 
 		throw redirect(303, "/");
