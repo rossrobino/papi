@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { enhance, type SubmitFunction } from "$app/forms";
+	import { enhance } from "$app/forms";
 	import { insertDataIntoPrompt } from "$lib/util/insertDataIntoPrompt";
 	import { loading } from "$lib/stores";
 	import Prompt from "./Prompt.svelte";
@@ -145,6 +145,14 @@
 						</button>
 					</div>
 				</form>
+			</section>
+			<section class="flex flex-col gap-4">
+				<h2>API</h2>
+				<p>
+					<a href="/api/{data.prompt.name}{dataString}">
+						{info.baseUrl}/api/{data.prompt.name}{dataString}
+					</a>
+				</p>
 			</section>
 		</div>
 	</div>

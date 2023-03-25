@@ -6,7 +6,7 @@
 </script>
 
 <Head
-	title="A Prompt Library and Tester"
+	title="A Prompt Library and API"
 	description="Use papi to manage your prompts for ai models."
 	class="text-teal-700"
 />
@@ -40,6 +40,14 @@
 	</section>
 
 	<section class="flex flex-col gap-4">
+		<h2>Run</h2>
+		<p>Run a prompt in other applications with the API.</p>
+		<p>
+			<a href="/api/your-prompt-name">https://papi.run/api/your-prompt-name</a>
+		</p>
+	</section>
+
+	<section class="flex flex-col gap-4">
 		<h2>Open Source</h2>
 		<p>
 			<Papi /> is open sourced under the MIT License. Check out the project on
@@ -48,7 +56,7 @@
 		</p>
 		<p>
 			<Papi /> is currently in
-			<b>alpha,</b>
+			<b>beta,</b>
 			please be aware there could be bugs or downtime with the application.
 		</p>
 	</section>
