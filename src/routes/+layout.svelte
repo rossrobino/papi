@@ -6,6 +6,10 @@
 	import { enhance } from "$app/forms";
 	import { loadingSubmitFunction } from "$lib/util/loadingSubmitFunction";
 	import { loading } from "$lib/stores";
+	import { inject } from "@vercel/analytics";
+	import { dev } from "$app/environment";
+
+	inject({ mode: dev ? "development" : "production" });
 
 	export let data;
 </script>

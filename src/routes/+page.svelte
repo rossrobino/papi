@@ -54,11 +54,6 @@
 			<a href="https://github.com/rossrobino/papi">GitHub</a>
 			to contribute, share feedback, or create issues.
 		</p>
-		<p>
-			<Papi /> is currently in
-			<b>beta,</b>
-			please be aware there could be bugs or downtime with the application.
-		</p>
 	</section>
 
 	<div class="flex justify-center">
