@@ -36,7 +36,7 @@ export const GET = async ({ url, params, locals: { db }, fetch }) => {
 		model: "gpt-3.5-turbo",
 		messages: [{ role: "user", content: promptWithData }],
 		temperature: 0,
-		max_tokens: 500,
+		max_tokens: 300,
 	});
 
 	const message = String(response.data.choices[0].message?.content).trim();
