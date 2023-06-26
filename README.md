@@ -2,8 +2,6 @@
 
 ## A Prompt Library and API
 
-[https://papi.run](https://papi.run)
-
 ### Tooling
 
 - [sveltejs/kit](https://github.com/sveltejs/kit)
